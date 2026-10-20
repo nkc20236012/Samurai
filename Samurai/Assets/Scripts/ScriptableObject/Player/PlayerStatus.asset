@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerStatus
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatus
   Health: 100
-  MoveSpeed: 5
-  SprintSpeed: 8
+  MoveSpeed: 10
+  SprintSpeed: 30
