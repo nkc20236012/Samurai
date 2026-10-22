@@ -8,7 +8,6 @@ public class PlayerInputEntity
         input.Player.Move.performed += OnMove;
         input.Player.Move.canceled += OutMove;
         input.Player.Sprint.started += OnSprint;
-        input.Player.Sprint.canceled += OnSprint;
         input.Player.Camera.performed += OnCameraMove;
     }
 
@@ -26,7 +25,7 @@ public class PlayerInputEntity
     }
     private void OnSprint(InputAction.CallbackContext context)
     {
-        IsSprint = context.ReadValueAsButton();
+        IsSprint = !IsSprint;
     }
     private void OnCameraMove(InputAction.CallbackContext context)
     {

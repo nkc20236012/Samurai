@@ -17,19 +17,42 @@ public class PlayerMoveUseCase
         _playerTransform = transform;
     }
 
-    public void Move()
+    //引数の方向に移動、回転
+    public void Move(Quaternion cameraAngle, Vector3 moveVelocity)
     {
-        Quaternion cameraAngle =
-            Quaternion.AngleAxis(_cameraEntity.CameraTrancform.eulerAngles.y, Vector3.up);
-        Vector3 moveVelocity = cameraAngle*(_inputEntity.MoveInput * _statusEntity.Speed);
         if (_inputEntity.MoveInput.magnitude != 0.0f)
         {
             _playerTransform.rotation =
-                Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(
-                _inputEntity.MoveInput) * cameraAngle, 0.2f
+                Quaternion.Slerp(_playerTransform.rotation, cameraAngle, 0.2f
                  );
         }
         _rigidbody.linearVelocity =
             new Vector3(moveVelocity.x, _rigidbody.linearVelocity.y, moveVelocity.z);
+    }
+
+    //入力方向に移動指示
+    public void Walk()
+    {
+        Quaternion cameraAngle =
+            Quaternion.AngleAxis(_cameraEntity.CameraTrancform.eulerAngles.y, Vector3.up);
+        Vector3 moveVelocity = cameraAngle * (_inputEntity.MoveInput * _statusEntity.Speed);
+        Move(cameraAngle, moveVelocity);
+    }
+
+    //カメラ方向に移動指示
+    public void Boost()
+    {
+        Quaternion cameraAngle =
+            Quaternion.AngleAxis(_cameraEntity.CameraTrancform.eulerAngles.y, Vector3.up);
+        Vector3 moveVelocity = cameraAngle * (_playerTransform.forward * _statusEntity.Speed);
+        Move(cameraAngle, moveVelocity);
+    }
+
+    public void QuickRotate()
+    {
+        Quaternion cameraAngle =
+            Quaternion.AngleAxis(_cameraEntity.CameraTrancform.eulerAngles.y, Vector3.up);
+        _playerTransform.rotation = cameraAngle;
+        Debug.Log("A");
     }
 }

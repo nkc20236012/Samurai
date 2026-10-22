@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private PlayerStatus _statusData;
 
-    private Rigidbody _rigidbody;
+    private PlayerStateMachine _stateMachine;
     private PlayerInput _input => PlayerInputAction;
     private PlayerCameraEntity _cameraEntity => CameraEntity;
     private PlayerStatusEntity _statusEntity;
@@ -16,23 +16,24 @@ public class Player : MonoBehaviour
     private PlayerMoveUseCase _moveUseCase;
     public void Start()
     {
-        _rigidbody = GetComponentInChildren<Rigidbody>();
+        Rigidbody rigidbody = GetComponentInChildren<Rigidbody>();
         _statusEntity = new PlayerStatusEntity(_statusData);
         _inputEntity = new PlayerInputEntity(_input);
         _moveUseCase = new PlayerMoveUseCase(_inputEntity, _statusEntity,_cameraEntity,
-            _rigidbody,this.transform);
+            rigidbody,this.transform);
+        PlayerBaseContext baseContext =
+            new PlayerBaseContext(_statusEntity, _inputEntity,_cameraEntity,_moveUseCase);
+        _stateMachine = new PlayerStateMachine(baseContext);
+        _stateMachine.Initialize(StateType.Idle);
+    }
+
+    public void Update()
+    {
+        _stateMachine.OnUpdate();
     }
 
     public void FixedUpdate()
     {
-        if(_inputEntity.IsSprint)
-        {
-            _statusEntity.SprintMode();
-        }
-        else
-        {
-            _statusEntity.MoveMode();
-        }
-        _moveUseCase.Move();
+        _stateMachine.OnFixedUpdate();
     }
 }
