@@ -17,17 +17,9 @@ public class PlayerMoveUseCase
         _playerTransform = transform;
     }
 
-    //引数の方向に移動、回転
-    public void Move(Quaternion cameraAngle, Vector3 moveVelocity)
+    public void Stop()
     {
-        if (_inputEntity.MoveInput.magnitude != 0.0f)
-        {
-            _playerTransform.rotation =
-                Quaternion.Slerp(_playerTransform.rotation, cameraAngle, 0.2f
-                 );
-        }
-        _rigidbody.linearVelocity =
-            new Vector3(moveVelocity.x, _rigidbody.linearVelocity.y, moveVelocity.z);
+        _rigidbody.linearVelocity = new Vector3(0,_rigidbody.linearVelocity.y,0);
     }
 
     //入力方向に移動指示
@@ -36,23 +28,32 @@ public class PlayerMoveUseCase
         Quaternion cameraAngle =
             Quaternion.AngleAxis(_cameraEntity.CameraTrancform.eulerAngles.y, Vector3.up);
         Vector3 moveVelocity = cameraAngle * (_inputEntity.MoveInput * _statusEntity.Speed);
-        Move(cameraAngle, moveVelocity);
+        _playerTransform.rotation =
+            Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(
+            _inputEntity.MoveInput) * cameraAngle, 0.2f);
+        _rigidbody.linearVelocity =
+            new Vector3(moveVelocity.x, _rigidbody.linearVelocity.y, moveVelocity.z);
+
     }
 
     //カメラ方向に移動指示
     public void Boost()
     {
-        Quaternion cameraAngle =
-            Quaternion.AngleAxis(_cameraEntity.CameraTrancform.eulerAngles.y, Vector3.up);
-        Vector3 moveVelocity = cameraAngle * (_playerTransform.forward * _statusEntity.Speed);
-        Move(cameraAngle, moveVelocity);
+        Vector3 cameraAngle = _cameraEntity.CameraTrancform.forward;
+        Vector3 moveVelocity = cameraAngle * _statusEntity.Speed;
+        _playerTransform.rotation =
+            Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(cameraAngle), 0.2f);
+        _rigidbody.linearVelocity =
+            new Vector3(moveVelocity.x, moveVelocity.y, moveVelocity.z);
     }
 
-    public void QuickRotate()
+    public void BoostStop()
     {
         Quaternion cameraAngle =
             Quaternion.AngleAxis(_cameraEntity.CameraTrancform.eulerAngles.y, Vector3.up);
         _playerTransform.rotation = cameraAngle;
-        Debug.Log("A");
+        _rigidbody.linearVelocity =
+            new Vector3(_rigidbody.linearVelocity.x/2, _rigidbody.linearVelocity.y, _rigidbody.linearVelocity.z/2);
     }
+
 }

@@ -12,11 +12,11 @@ public class PlayerStatusEntity
         SprintSpeed = status.SprintSpeed;
         Speed = MoveSpeed;
     }
-    public void MoveMode()
+    public void ChangeWalkSpeed()
     {
         Speed = MoveSpeed;
     }
-    public void SprintMode()
+    public void ChangeBoostSpeed()
     {
         Speed = SprintSpeed;
     }

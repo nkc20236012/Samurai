@@ -7,6 +7,6 @@ public class PlayerBaseContext
         PlayerCameraEntity cameraEntity,PlayerMoveUseCase moveUseCase)
     {
         IdleContext = new PlayerIdleContext(statusEntity, inputEntity);
-        WalkContext = new PlayerWalkContext(statusEntity, inputEntity,moveUseCase);
+        WalkContext = new PlayerWalkContext(statusEntity, inputEntity,cameraEntity,moveUseCase);
     }
 }

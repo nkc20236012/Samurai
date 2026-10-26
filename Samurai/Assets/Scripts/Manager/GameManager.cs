@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
     private GameObject _playerPrefab;
     [SerializeField]
     private GameObject _cameraPrefab;
+    [SerializeField]
+    private float _cameraDefaultSpeed;
+    [SerializeField]
+    private float _cameraBoostmodeSpeed;
     void Awake()
     {
         //ê∂ê¨
@@ -18,7 +22,9 @@ public class GameManager : MonoBehaviour
         var player = playerObject.GetComponent<Player>();
         player.PlayerInputAction = inputController.PlayerInputAction;
         CinemachineCamera cinemachine = camera.GetComponent<CinemachineCamera>();
-        PlayerCameraEntity cameraEntity = new PlayerCameraEntity(Camera.main.transform, cinemachine);
+        CinemachineInputAxisController inputAxisController = camera.GetComponent<CinemachineInputAxisController>();
+        PlayerCameraEntity cameraEntity = new PlayerCameraEntity(Camera.main.transform, cinemachine,
+            inputAxisController,_cameraDefaultSpeed,_cameraBoostmodeSpeed);
         player.CameraEntity = cameraEntity;
 
         //ÉJÉÅÉâèâä˙ê›íË

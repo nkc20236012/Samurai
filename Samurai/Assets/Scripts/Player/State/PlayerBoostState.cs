@@ -4,25 +4,29 @@ public class PlayerBoostState : PlayerStateBase
 {
     private PlayerStatusEntity _statusEntity;
     private PlayerInputEntity _inputEntity;
+    private PlayerCameraEntity _cameraEntity;
     private PlayerMoveUseCase _moveUseCase;
 
     public PlayerBoostState(PlayerWalkContext walkContext,PlayerStateMachine stateMachine) : base(stateMachine)
     {
         _statusEntity = walkContext.StatusEntity;
         _inputEntity = walkContext.InputEntity;
+        _cameraEntity = walkContext.CameraEntity;
         _moveUseCase = walkContext.MoveUseCase;
     }
 
     public override void Enter()
     {
         base.Enter();
-        _moveUseCase.QuickRotate();
-        _statusEntity.SprintMode();
+        _statusEntity.ChangeBoostSpeed();
+        _cameraEntity.BoostMode();
     }
 
     public override void Exit()
     {
         base.Exit();
+        _moveUseCase.BoostStop();
+        _cameraEntity.WalkMode();
     }
 
     public override void FixedUpdate()
