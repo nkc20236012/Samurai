@@ -4,22 +4,22 @@ public class PlayerWalkState : PlayerStateBase
 {
     private PlayerStatusEntity _statusEntity;
     private PlayerInputEntity _inputEntity;
-    private PlayerCameraEntity _cameraEntity;
     private PlayerMoveUseCase _moveUseCase;
+    private PlayerCameraUseCase _cameraUseCase;
 
     public PlayerWalkState(PlayerWalkContext walkContext,PlayerStateMachine stateMachine) : base(stateMachine)
     {
         _statusEntity = walkContext.StatusEntity;
         _inputEntity = walkContext.InputEntity;
-        _cameraEntity = walkContext.CameraEntity;
         _moveUseCase = walkContext.MoveUseCase;
+        _cameraUseCase = walkContext.CameraUseCase;
     }
 
     public override void Enter()
     {
         base.Enter();
         _statusEntity.ChangeWalkSpeed();
-        _cameraEntity.WalkMode();
+        _cameraUseCase.WalkMode();
     }
 
     public override void Exit()
@@ -43,7 +43,7 @@ public class PlayerWalkState : PlayerStateBase
         }
         if (_inputEntity.IsSprint)
         {
-            (this as IPlayerStateChangeable).ChangeState(StateType.Boost);
+            (this as IPlayerStateChangeable).ChangeState(StateType.Charge);
         }
     }
 }

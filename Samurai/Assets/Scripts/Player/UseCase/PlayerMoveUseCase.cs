@@ -56,4 +56,18 @@ public class PlayerMoveUseCase
             new Vector3(_rigidbody.linearVelocity.x/2, _rigidbody.linearVelocity.y, _rigidbody.linearVelocity.z/2);
     }
 
+    public void Attack()
+    {
+        Vector3 cameraAngle = _cameraEntity.CameraTrancform.forward;
+        _playerTransform.rotation =
+            Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(cameraAngle), 0.2f);
+        _rigidbody.linearVelocity =
+            new Vector3(_rigidbody.linearVelocity.x / 2, _rigidbody.linearVelocity.y, _rigidbody.linearVelocity.z / 2);
+    }
+    public void Charge()
+    {
+        Vector3 cameraAngle = _cameraEntity.CameraTrancform.forward;
+        _playerTransform.rotation =
+            Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(cameraAngle), 0.2f);
+    }
 }

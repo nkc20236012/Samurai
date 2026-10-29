@@ -8,11 +8,13 @@ public class PlayerStateMachine : MonoBehaviour
     private Dictionary<StateType, PlayerStateBase> _stateDic = new Dictionary<StateType, PlayerStateBase>();
     public Dictionary<StateType, PlayerStateBase> StateDic => _stateDic;
 
-    public PlayerStateMachine(PlayerBaseContext baseContext)
+    public PlayerStateMachine(PlayerBaseContext baseContext,PlayerStateData stateData)
     {
         _stateDic.Add(StateType.Idle, new PlayerIdleState(baseContext.IdleContext,this));
         _stateDic.Add(StateType.Walk, new PlayerWalkState(baseContext.WalkContext,this));
+        _stateDic.Add(StateType.Charge, new PlayerChargeState(baseContext.WalkContext,stateData,this));
         _stateDic.Add(StateType.Boost, new PlayerBoostState(baseContext.WalkContext, this));
+        _stateDic.Add(StateType.Attack, new PlayerAttackState(baseContext.AttackContext,stateData,this));
     }
 
     public void Initialize(StateType startState)

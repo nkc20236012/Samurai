@@ -4,29 +4,29 @@ public class PlayerBoostState : PlayerStateBase
 {
     private PlayerStatusEntity _statusEntity;
     private PlayerInputEntity _inputEntity;
-    private PlayerCameraEntity _cameraEntity;
     private PlayerMoveUseCase _moveUseCase;
+    private PlayerCameraUseCase _cameraUseCase;
 
     public PlayerBoostState(PlayerWalkContext walkContext,PlayerStateMachine stateMachine) : base(stateMachine)
     {
         _statusEntity = walkContext.StatusEntity;
         _inputEntity = walkContext.InputEntity;
-        _cameraEntity = walkContext.CameraEntity;
         _moveUseCase = walkContext.MoveUseCase;
+        _cameraUseCase = walkContext.CameraUseCase;
     }
 
     public override void Enter()
     {
         base.Enter();
         _statusEntity.ChangeBoostSpeed();
-        _cameraEntity.BoostMode();
+        _cameraUseCase.BoostMode();
     }
 
     public override void Exit()
     {
         base.Exit();
         _moveUseCase.BoostStop();
-        _cameraEntity.WalkMode();
+        _cameraUseCase.WalkMode();
     }
 
     public override void FixedUpdate()
@@ -41,6 +41,10 @@ public class PlayerBoostState : PlayerStateBase
         if(!_inputEntity.IsSprint)
         {
             (this as IPlayerStateChangeable).ChangeState(StateType.Idle);
+        }
+        if(_inputEntity.IsAttack)
+        {
+            (this as IPlayerStateChangeable).ChangeState(StateType.Attack);
         }
     }
 }

@@ -33,7 +33,7 @@ public class PlayerIdleState : PlayerStateBase
         }
         if(_inputEntity.IsSprint)
         {
-            (this as IPlayerStateChangeable).ChangeState(StateType.Boost);
+            (this as IPlayerStateChangeable).ChangeState(StateType.Charge);
         }
     }
 }

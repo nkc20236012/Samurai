@@ -1999,9 +1999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _playerPrefab: {fileID: 5273431559382556383, guid: 484dc4f87bdf7134d813f7d1a2495566, type: 3}
-  _cameraPrefab: {fileID: 5608226697989341987, guid: 9427c875d5983f14fab80ffef36f4a56, type: 3}
-  _cameraDefaultSpeed: 10
-  _cameraBoostmodeSpeed: 3
+  _cameraData: {fileID: 11400000, guid: 13c7bce8d9671ec4aaec81927460f26e, type: 2}
 --- !u!4 &2088668098
 Transform:
   m_ObjectHideFlags: 0

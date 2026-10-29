@@ -7,23 +7,33 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private PlayerStatus _statusData;
+    [SerializeField]
+    private PlayerStateData _stateData;
 
     private PlayerStateMachine _stateMachine;
     private PlayerInput _input => PlayerInputAction;
     private PlayerCameraEntity _cameraEntity => CameraEntity;
-    private PlayerStatusEntity _statusEntity;
-    private PlayerInputEntity _inputEntity;
-    private PlayerMoveUseCase _moveUseCase;
     public void Start()
     {
         Rigidbody rigidbody = GetComponentInChildren<Rigidbody>();
-        _statusEntity = new PlayerStatusEntity(_statusData);
-        _inputEntity = new PlayerInputEntity(_input);
-        _moveUseCase = new PlayerMoveUseCase(_inputEntity, _statusEntity,_cameraEntity,
+
+        //Entity
+        PlayerStatusEntity statusEntity = new PlayerStatusEntity(_statusData);
+        PlayerInputEntity inputEntity = new PlayerInputEntity(_input);
+        PlayerColliderEntity colliderEntity = new PlayerColliderEntity();
+
+        //UseCase
+        PlayerMoveUseCase moveUseCase = new PlayerMoveUseCase(inputEntity, statusEntity,_cameraEntity,
             rigidbody,this.transform);
+        PlayerCameraUseCase cameraUseCase = new PlayerCameraUseCase(CameraEntity);
+        PlayerColliderUseCase colliderUseCase = new PlayerColliderUseCase(colliderEntity);
+
+        //Context
         PlayerBaseContext baseContext =
-            new PlayerBaseContext(_statusEntity, _inputEntity,_cameraEntity,_moveUseCase);
-        _stateMachine = new PlayerStateMachine(baseContext);
+            new PlayerBaseContext(statusEntity, inputEntity,_cameraEntity,moveUseCase,
+            cameraUseCase,colliderUseCase);
+
+        _stateMachine = new PlayerStateMachine(baseContext,_stateData);
         _stateMachine.Initialize(StateType.Idle);
     }
 

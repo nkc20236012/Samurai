@@ -1,16 +1,17 @@
 public class PlayerWalkContext
 {
-    public PlayerStatusEntity StatusEntity;
-    public PlayerInputEntity InputEntity;
-    public PlayerCameraEntity CameraEntity;
-    public PlayerMoveUseCase MoveUseCase;
+    public PlayerStatusEntity StatusEntity { get; private set; }
+    public PlayerInputEntity InputEntity { get; private set; }
+    public PlayerCameraEntity CameraEntity { get; private set; }
+    public PlayerMoveUseCase MoveUseCase { get; private set; }
+    public PlayerCameraUseCase CameraUseCase { get; private set; }
 
     public PlayerWalkContext(PlayerStatusEntity statusEntity,PlayerInputEntity inputEntity,
-        PlayerCameraEntity cameraEntity,PlayerMoveUseCase moveUseCase)
+        PlayerMoveUseCase moveUseCase,PlayerCameraUseCase cameraUseCase)
     {
         StatusEntity = statusEntity;
         InputEntity = inputEntity;
-        CameraEntity = cameraEntity;
         MoveUseCase = moveUseCase;
+        CameraUseCase = cameraUseCase;
     }
 }
