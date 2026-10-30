@@ -9,10 +9,12 @@ public class PlayerColliderUseCase
     }
     public void AttackStart()
     {
+        _colliderEntity.PlayerAttack.enabled = true;
         Debug.Log("Start");
     }
     public void AttackEnd()
     {
+        _colliderEntity.PlayerAttack.enabled = false;
         Debug.Log("End");
     }
 }

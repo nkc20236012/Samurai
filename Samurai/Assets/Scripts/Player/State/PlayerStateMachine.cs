@@ -11,9 +11,10 @@ public class PlayerStateMachine : MonoBehaviour
     public PlayerStateMachine(PlayerBaseContext baseContext,PlayerStateData stateData)
     {
         _stateDic.Add(StateType.Idle, new PlayerIdleState(baseContext.IdleContext,this));
-        _stateDic.Add(StateType.Walk, new PlayerWalkState(baseContext.WalkContext,this));
-        _stateDic.Add(StateType.Charge, new PlayerChargeState(baseContext.WalkContext,stateData,this));
-        _stateDic.Add(StateType.Boost, new PlayerBoostState(baseContext.WalkContext, this));
+        _stateDic.Add(StateType.Walk, new PlayerWalkState(baseContext.MoveContext,this));
+        _stateDic.Add(StateType.Air, new PlayerAirState(baseContext.MoveContext, this));
+        _stateDic.Add(StateType.Charge, new PlayerChargeState(baseContext.MoveContext,stateData,this));
+        _stateDic.Add(StateType.Boost, new PlayerBoostState(baseContext.MoveContext,stateData, this));
         _stateDic.Add(StateType.Attack, new PlayerAttackState(baseContext.AttackContext,stateData,this));
     }
 

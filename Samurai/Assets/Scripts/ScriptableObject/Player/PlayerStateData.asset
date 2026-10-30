@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861c5414bb912164f8a8e13370f3e55c, type: 3}
   m_Name: PlayerStateData
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStateData
-  ChargeStateEnd: 30
+  ChargeStateEnd: 50
+  AttackBlockTime: 10
   AttackTime: 1
   AttackTimeEnd: 10
   AttackStateEnd: 50

@@ -15,3 +15,7 @@ MonoBehaviour:
   Health: 100
   MoveSpeed: 10
   SprintSpeed: 30
+  Distance: 0.2
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8

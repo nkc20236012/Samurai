@@ -18,6 +18,9 @@ public class PlayerInputEntity
     public bool IsAttack { get; private set; } 
     public Vector3 CameraMove {  get; private set; }
 
+    private bool _attackBlock = false;
+    private bool _boostBlock = false;
+
     private void OnMove(InputAction.CallbackContext context)
     {
         MoveInput = new Vector3(context.ReadValue<Vector2>().x,0,context.ReadValue<Vector2>().y);
@@ -28,7 +31,10 @@ public class PlayerInputEntity
     }
     private void OnSprint(InputAction.CallbackContext context)
     {
-        IsSprint = !IsSprint;
+        if (!_boostBlock)
+        {
+            IsSprint = !IsSprint;
+        }
     }
     private void OnCameraMove(InputAction.CallbackContext context)
     {
@@ -36,7 +42,19 @@ public class PlayerInputEntity
     }
     private void OnAttack(InputAction.CallbackContext context)
     {
-        IsAttack = context.ReadValueAsButton();
-        IsSprint = false;
+        if (!_attackBlock)
+        {
+            IsAttack = context.ReadValueAsButton();
+            IsSprint = false;
+        }
+    }
+
+    public void AttackBlock(bool block)
+    {
+        _attackBlock = block;
+    }
+    public void BoostBlock(bool block)
+    {
+        _boostBlock = block;
     }
 }

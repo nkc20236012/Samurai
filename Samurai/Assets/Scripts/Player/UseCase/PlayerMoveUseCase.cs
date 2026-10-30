@@ -58,9 +58,6 @@ public class PlayerMoveUseCase
 
     public void Attack()
     {
-        Vector3 cameraAngle = _cameraEntity.CameraTrancform.forward;
-        _playerTransform.rotation =
-            Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(cameraAngle), 0.2f);
         _rigidbody.linearVelocity =
             new Vector3(_rigidbody.linearVelocity.x / 2, _rigidbody.linearVelocity.y, _rigidbody.linearVelocity.z / 2);
     }
@@ -69,5 +66,19 @@ public class PlayerMoveUseCase
         Vector3 cameraAngle = _cameraEntity.CameraTrancform.forward;
         _playerTransform.rotation =
             Quaternion.Slerp(_playerTransform.rotation, Quaternion.LookRotation(cameraAngle), 0.2f);
+    }
+    public void Reset()
+    {
+        Vector3 cameraAngle = _cameraEntity.CameraTrancform.forward;
+        cameraAngle.x = 0;
+        cameraAngle.z = 0;
+        _playerTransform.rotation =
+            Quaternion.AngleAxis(_cameraEntity.CameraTrancform.eulerAngles.y, Vector3.up);
+
+    //    Quaternion cameraAngle =
+    //Quaternion.AngleAxis(_cameraEntity.CameraTrancform.eulerAngles.y, Vector3.up);
+    //    _playerTransform.rotation =
+    //        Quaternion.Slerp(_playerTransform.rotation, cameraAngle, 0.2f);
+
     }
 }

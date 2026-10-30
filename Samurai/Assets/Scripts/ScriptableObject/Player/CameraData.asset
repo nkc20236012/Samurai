@@ -16,6 +16,6 @@ MonoBehaviour:
   CameraDefaultSpeed: 10
   CameraBoostmodeSpeed: 3
   MaxVerticalRange: 60
-  MinVerticalRange: 0
+  MinVerticalRange: 2
   BoostMaxVerticalRange: 60
   BoostMinVerticalRange: -30
